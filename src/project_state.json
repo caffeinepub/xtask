@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 11,
   "summary": "Xtask: redesign/build a fully supported, production-ready web-only paid tasks platform using Internet Computer stack (React frontend + Motoko backend), leveraging Internet Identity authentication and on-chain canister storage; excludes unsupported items like mobile apps, Next.js/Node backend, PostgreSQL/MongoDB, email/Google/Apple auth, real-time external services, and PayPal Payouts.",
   "architectural_notes": [
     "Platform constraints accepted: Internet Computer stack only (React web frontend + Motoko backend).",
@@ -140,6 +140,14 @@
         "REQ-23"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-simple-ui-control-labeled-show-my-principal-that-displays-the-currently-authenticated-internet-identity-principal-id-as-text-so-the-user-can-copy-share-it-for-admin-allowlisting",
+      "title": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -258,6 +266,12 @@
         "REQ-22"
       ],
       "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Add a simple UI control (e.g., button/page) that displays the currently authenticated Internet Identity Principal ID to help users/admins share it for admin allowlisting.",
+      "reqIds": [],
+      "status": "in_progress"
     }
   ],
   "gameProjectType": "none",

@@ -2,12 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-deploy-the-updated-application-frontend-backend-canister-and-provide-the-final-live-site-url-domain-along-with-the-relevant-deployed-canister-ids",
-      "featureTitle": "Deploy the updated application (frontend + backend canister) and provide the final live site URL/domain along with the relevant deployed canister IDs.",
+      "featureId": "feature-add-a-simple-ui-control-labeled-show-my-principal-that-displays-the-currently-authenticated-internet-identity-principal-id-as-text-so-the-user-can-copy-share-it-for-admin-allowlisting",
+      "featureTitle": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
       "files": [
-        "frontend/README.md",
-        "frontend/src/deployInfo.ts",
-        "frontend/src/pages/About.tsx"
+        "frontend/src/components/PrincipalReveal.tsx",
+        "frontend/src/pages/Profile.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -18,7 +17,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-23"
+        "REQ-24"
       ],
       "confidence": "high"
     }

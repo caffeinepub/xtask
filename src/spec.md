@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Wire up real admin statistics and payout management in the Motoko backend, ensure payout accounting is consistent, and deploy the updated app with a live URL and canister IDs.
+**Goal:** Let authenticated users view and copy their current Internet Identity Principal ID from the profile page.
 
 **Planned changes:**
-- Implement/admin-gate `getAdminDashboardStats()` to return persisted (non-placeholder) totals for users, earnings, active tasks, and pending payouts used by the existing admin dashboard hook/page.
-- Implement/admin-gate payout admin methods to list all payout requests and update a request’s status (approve/decline), including clean errors for invalid request IDs, to support the existing admin payouts hook/page and React Query refresh behavior.
-- Enforce consistent payout request state transitions and balance accounting to prevent over-withdrawal and double-application of approval/decline effects.
-- Deploy frontend + backend canisters and provide the live HTTPS site URL/domain and the deployed canister IDs.
+- Add a clearly visible “Show my Principal” control on the authenticated `/app/profile` page.
+- When activated, display the caller Principal ID as text using the existing identity API (e.g., `identity.getPrincipal().toText()`).
+- If no identity is available, show an English message indicating the user must sign in to view the Principal.
+- Add a “Copy” button to copy the displayed Principal to the clipboard, with minimal confirmation (toast or inline text).
 
-**User-visible outcome:** Admins can view real dashboard stats and manage (approve/decline) payout requests with correctly updating counts/statuses, and the app is accessible at a provided live URL with corresponding canister IDs.
+**User-visible outcome:** On the profile page, users can reveal their Internet Identity Principal ID and copy it for sharing/allowlisting; signed-out users are prompted to sign in to view it.

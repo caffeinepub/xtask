@@ -1,31 +1,27 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Expose deployment URL/canister IDs in the frontend for the final live deployment",
+  "title": "Add “Show my Principal” control on Profile page",
   "requirements": [
     {
-      "id": "REQ-23",
-      "summary": "Add frontend-visible deployment metadata (live URL + canister IDs) so the deployed app can be verified easily while keeping /admin routes and admin-only calls gated.",
+      "id": "REQ-24",
+      "summary": "Expose a “Show my Principal” control on the authenticated Profile page with reveal + clipboard copy behavior.",
       "acceptanceCriteria": [
-        "The app is deployed successfully and loads over HTTPS at the provided URL.",
-        "The response includes the live site domain/URL and the canister IDs needed to reference the deployment.",
-        "Visiting `/admin` on the deployed site works (routes load) and admin-only API calls are gated by admin authorization."
+        "On the authenticated /app/profile page, there is a clearly visible control labeled “Show my Principal”.",
+        "When clicked (or toggled), the UI reveals the caller Principal ID derived from the current Internet Identity (e.g., identity.getPrincipal().toText()).",
+        "If the user is not authenticated (no identity available), the UI shows an English message indicating the user must sign in to view the Principal.",
+        "The displayed Principal ID can be copied to clipboard via a “Copy” button (with a minimal confirmation such as toast or inline text)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/deployInfo.ts",
+          "path": "frontend/src/components/PrincipalReveal.tsx",
           "operation": "create",
-          "description": "Create a small, frontend-only deployment metadata module that reads the live site URL/domain and relevant canister IDs from build-time environment variables (e.g., Vite import.meta.env) and exposes them as typed constants for the UI to render."
+          "description": "Create a small, reusable UI component that consumes the existing useInternetIdentity hook to (1) render a control labeled “Show my Principal”, (2) toggle-reveal identity.getPrincipal().toText(), (3) show a sign-in-required message when identity is unavailable, and (4) provide a “Copy” action using navigator.clipboard with a minimal confirmation (toast via existing sonner usage pattern or inline confirmation)."
         },
         {
-          "path": "frontend/src/pages/About.tsx",
+          "path": "frontend/src/pages/Profile.tsx",
           "operation": "modify",
-          "description": "Render a new “Deployment” section that shows the live site URL/domain and deployed canister IDs using values from frontend/src/deployInfo.ts (read-only display). Keep all user-facing text in English."
-        },
-        {
-          "path": "frontend/README.md",
-          "operation": "modify",
-          "description": "Document how to set the frontend build-time variables used by frontend/src/deployInfo.ts (live URL/domain + canister IDs) for local/dev vs deployed builds, so the deployed site can display accurate deployment info without code changes."
+          "description": "Integrate the new PrincipalReveal component into the existing authenticated Profile page layout (e.g., within an existing GlassCard or as a new section) so it is clearly visible on /app/profile, without modifying any immutable auth hooks or any files under frontend/src/components/ui."
         }
       ]
     }

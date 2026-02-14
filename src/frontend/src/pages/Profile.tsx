@@ -4,6 +4,7 @@ import GlassCard from '../components/GlassCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import LoginButton from '../components/LoginButton';
+import PrincipalReveal from '../components/PrincipalReveal';
 import { User, Settings, Info } from 'lucide-react';
 
 export default function Profile() {
@@ -45,6 +46,8 @@ export default function Profile() {
           <p className="text-sm text-gray-400">Total Referrals</p>
           <p className="text-2xl font-bold text-white">{profile?.referrals.length || 0}</p>
         </div>
+
+        <PrincipalReveal />
       </GlassCard>
 
       <GlassCard className="space-y-4">

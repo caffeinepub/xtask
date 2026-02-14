@@ -14,7 +14,7 @@
   "frontend/src/pages/Tasks.tsx": "Tasks list page displaying all available tasks with status badges, rewards, and navigation to task details.",
   "frontend/src/pages/TaskDetails.tsx": "Task details page showing full task information, submission form for available tasks, and submission status for pending/completed tasks.",
   "frontend/src/pages/Payout.tsx": "Payout page showing available balance, minimum payout requirement, and placeholders for payout methods and transaction history (backend gaps documented).",
-  "frontend/src/pages/Profile.tsx": "User profile page displaying user information, referral code, referral count, and account settings including logout and about link.",
+  "frontend/src/pages/Profile.tsx": "User profile page displaying user information, referral code, referral count, principal ID reveal control, and account settings including logout and about link.",
   "frontend/src/pages/Notifications.tsx": "Notifications page with placeholder for notification list (backend gap documented).",
   "frontend/src/pages/Support.tsx": "Support inbox page with placeholder for support ticket system (backend gap documented).",
   "frontend/src/pages/SupportThread.tsx": "Support thread detail page placeholder (backend gap documented).",
@@ -36,5 +36,6 @@
   "frontend/src/components/TextLogo.tsx": "Simple reusable text logo component rendering \"X\" in red and \"Task\" in white with bold typography.",
   "frontend/src/hooks/queries/useAdminDashboardStats.ts": "React Query hook for fetching admin dashboard statistics from the backend with proper actor dependency gating and error handling.",
   "frontend/src/hooks/queries/useAdminPayoutRequests.ts": "React Query hooks for fetching all payout requests and updating payout request status with automatic cache invalidation.",
-  "frontend/src/deployInfo.ts": "Deployment metadata module that reads canister IDs and site URL from Vite environment variables and exposes them as typed constants for UI display."
+  "frontend/src/deployInfo.ts": "Deployment metadata module that reads canister IDs and site URL from Vite environment variables and exposes them as typed constants for UI display.",
+  "frontend/src/components/PrincipalReveal.tsx": "Reusable component that displays a toggle control to reveal/hide the user's Internet Identity Principal ID with copy-to-clipboard functionality and toast notifications."
 }

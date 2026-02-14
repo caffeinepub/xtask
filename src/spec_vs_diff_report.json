@@ -1,52 +1,23 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T20:45:17.622Z",
-  "summary": "Diff adds backend admin stats and payout request listing endpoints, plus frontend deployment metadata display. However, the payout status update logic is truncated/unverifiable, balance/accounting safeguards are not evidenced, and actual deployment URL/canister IDs are not provided in the diff.",
-  "missing_requirements": [
-    {
-      "id": "REQ-21",
-      "requirement": "Admin can approve/decline payout requests via updatePayoutRequestStatus(requestId, newStatus), errors cleanly for missing requestId, and remains admin-only.",
-      "reason": "The diff shows the function signature and start of the admin check, but the implementation is truncated, so it is not verifiable that status updates persist, missing IDs error cleanly, and that repeated updates behave correctly.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-22",
-      "requirement": "Payout request state transitions must be consistent with user balances and prevent double-spending (server-side enforcement; deterministic accounting on approve/decline; no repeated effects).",
-      "reason": "No non-truncated evidence shows server-side balance checks when creating payout requests, nor any deterministic/auditable balance changes on approve/decline, nor guards against repeated approvals/declines applying effects multiple times.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "requirement": "Deploy the updated application and provide the final live site URL/domain (HTTPS) and deployed canister IDs.",
-      "reason": "The diff adds code to *display/read* deployment info from environment variables, but does not include an actual deployed URL/domain or concrete canister IDs, nor any deployment artifacts proving a successful deployment.",
-      "evidence": [
-        "frontend/src/deployInfo.ts",
-        "frontend/src/pages/About.tsx"
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-14T21:00:01.627Z",
+  "summary": "REQ-24 is implemented by adding a new PrincipalReveal component and rendering it on the /app/profile page. The control can reveal the authenticated user’s Principal ID, shows an unauthenticated message when no identity exists, and includes a copy-to-clipboard button with confirmation. However, the Profile page changes include additional UI/layout redesign that was not explicitly requested and may violate the “keep change minimal and localized” constraint.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Added an About page section that displays deployment information (live URL, network, canister IDs) sourced from build-time environment variables.",
-      "reason": "REQ-23 asks to deploy and provide the URL/canister IDs in the response, but does not request adding an in-app UI surface for deployment metadata.",
+      "description": "Profile page received broader UI/layout changes (new header section, multiple GlassCard sections, additional iconography/styling) beyond simply adding a “Show my Principal” control.",
+      "reason": "BuildRequest asked to keep the change minimal and localized, preferably just adding the control to the existing Profile page; the diff shows a more extensive Profile page rework not explicitly requested.",
       "evidence": [
-        "frontend/src/deployInfo.ts",
-        "frontend/src/pages/About.tsx"
+        "frontend/src/pages/Profile.tsx"
       ]
     }
   ],
-  "confidence": 0.66,
+  "confidence": 0.74,
   "changed_files": [
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/README.md",
-    "frontend/src/deployInfo.ts",
-    "frontend/src/pages/About.tsx",
+    "frontend/src/components/PrincipalReveal.tsx",
+    "frontend/src/pages/Profile.tsx",
     "project_state.json"
   ]
 }

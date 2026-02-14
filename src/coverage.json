@@ -1,66 +1,37 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T20:45:17.626Z",
+  "generatedAt": "2026-02-14T21:00:01.630Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
+    "total": 1,
     "implemented": 1,
     "items": [
       {
-        "id": "REQ-20",
-        "summary": "Complete and validate the Motoko backend implementation for admin dashboard statistics so the existing frontend hook `frontend/src/hooks/queries/useAdminDashboardStats.ts` and page `frontend/src/pages/admin/AdminDashboard.tsx` reliably return real, non-placeholder values for: total users, total earnings, active tasks, and pending payouts, and the method remains admin-only.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-21",
-        "summary": "Finish and harden the Motoko backend payout admin flow so the existing frontend hooks `frontend/src/hooks/queries/useAdminPayoutRequests.ts` and admin page `frontend/src/pages/admin/AdminPayouts.tsx` can list all withdrawal requests and approve/decline them through admin-only methods.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-22",
-        "summary": "Ensure payout request state transitions are consistent with user balances and do not allow double-spending or inconsistent accounting when users create payout requests and admins approve/decline them.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-23",
-        "summary": "Deploy the updated application (frontend + backend canister) and provide the final live site URL/domain along with the relevant deployed canister IDs.",
+        "id": "REQ-24",
+        "summary": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/deployInfo.ts",
-          "frontend/src/pages/About.tsx",
-          "frontend/README.md"
+          "frontend/src/components/PrincipalReveal.tsx",
+          "frontend/src/pages/Profile.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/deployInfo.ts",
-          "frontend/src/pages/About.tsx",
-          "frontend/README.md"
+          "frontend/src/components/PrincipalReveal.tsx",
+          "frontend/src/pages/Profile.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/README.md",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/deployInfo.ts",
-    "frontend/src/pages/About.tsx",
+    "frontend/src/components/PrincipalReveal.tsx",
+    "frontend/src/pages/Profile.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
