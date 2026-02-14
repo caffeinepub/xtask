@@ -1,0 +1,52 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T20:45:17.622Z",
+  "summary": "Diff adds backend admin stats and payout request listing endpoints, plus frontend deployment metadata display. However, the payout status update logic is truncated/unverifiable, balance/accounting safeguards are not evidenced, and actual deployment URL/canister IDs are not provided in the diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-21",
+      "requirement": "Admin can approve/decline payout requests via updatePayoutRequestStatus(requestId, newStatus), errors cleanly for missing requestId, and remains admin-only.",
+      "reason": "The diff shows the function signature and start of the admin check, but the implementation is truncated, so it is not verifiable that status updates persist, missing IDs error cleanly, and that repeated updates behave correctly.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "requirement": "Payout request state transitions must be consistent with user balances and prevent double-spending (server-side enforcement; deterministic accounting on approve/decline; no repeated effects).",
+      "reason": "No non-truncated evidence shows server-side balance checks when creating payout requests, nor any deterministic/auditable balance changes on approve/decline, nor guards against repeated approvals/declines applying effects multiple times.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "requirement": "Deploy the updated application and provide the final live site URL/domain (HTTPS) and deployed canister IDs.",
+      "reason": "The diff adds code to *display/read* deployment info from environment variables, but does not include an actual deployed URL/domain or concrete canister IDs, nor any deployment artifacts proving a successful deployment.",
+      "evidence": [
+        "frontend/src/deployInfo.ts",
+        "frontend/src/pages/About.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Added an About page section that displays deployment information (live URL, network, canister IDs) sourced from build-time environment variables.",
+      "reason": "REQ-23 asks to deploy and provide the URL/canister IDs in the response, but does not request adding an in-app UI surface for deployment metadata.",
+      "evidence": [
+        "frontend/src/deployInfo.ts",
+        "frontend/src/pages/About.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/README.md",
+    "frontend/src/deployInfo.ts",
+    "frontend/src/pages/About.tsx",
+    "project_state.json"
+  ]
+}

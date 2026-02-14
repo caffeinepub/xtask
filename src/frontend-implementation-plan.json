@@ -1,0 +1,33 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Expose deployment URL/canister IDs in the frontend for the final live deployment",
+  "requirements": [
+    {
+      "id": "REQ-23",
+      "summary": "Add frontend-visible deployment metadata (live URL + canister IDs) so the deployed app can be verified easily while keeping /admin routes and admin-only calls gated.",
+      "acceptanceCriteria": [
+        "The app is deployed successfully and loads over HTTPS at the provided URL.",
+        "The response includes the live site domain/URL and the canister IDs needed to reference the deployment.",
+        "Visiting `/admin` on the deployed site works (routes load) and admin-only API calls are gated by admin authorization."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/deployInfo.ts",
+          "operation": "create",
+          "description": "Create a small, frontend-only deployment metadata module that reads the live site URL/domain and relevant canister IDs from build-time environment variables (e.g., Vite import.meta.env) and exposes them as typed constants for the UI to render."
+        },
+        {
+          "path": "frontend/src/pages/About.tsx",
+          "operation": "modify",
+          "description": "Render a new “Deployment” section that shows the live site URL/domain and deployed canister IDs using values from frontend/src/deployInfo.ts (read-only display). Keep all user-facing text in English."
+        },
+        {
+          "path": "frontend/README.md",
+          "operation": "modify",
+          "description": "Document how to set the frontend build-time variables used by frontend/src/deployInfo.ts (live URL/domain + canister IDs) for local/dev vs deployed builds, so the deployed site can display accurate deployment info without code changes."
+        }
+      ]
+    }
+  ]
+}

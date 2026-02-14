@@ -1,0 +1,95 @@
+{
+  "kind": "build_request",
+  "title": "Finish backend wiring for admin statistics & payouts, then deploy and provide live domain",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-20",
+      "text": "Complete and validate the Motoko backend implementation for admin dashboard statistics so the existing frontend hook `frontend/src/hooks/queries/useAdminDashboardStats.ts` and page `frontend/src/pages/admin/AdminDashboard.tsx` reliably return real, non-placeholder values for: total users, total earnings, active tasks, and pending payouts, and the method remains admin-only.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "okay continue wiring the backend for statistics and payout then deploy the app and show me the site domain"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Calling `getAdminDashboardStats()` as an admin returns an `AdminDashboardStats` record with fields `totalUsers`, `totalEarnings`, `activeTasks`, and `pendingPayouts` populated from persisted canister state (not hardcoded constants).",
+        "Calling `getAdminDashboardStats()` as a non-admin traps/returns an authorization error consistent with the current authorization pattern.",
+        "The `/admin/dashboard` UI renders without errors and displays the returned values (no fallback placeholders) when logged in as an admin."
+      ]
+    },
+    {
+      "id": "REQ-21",
+      "text": "Finish and harden the Motoko backend payout admin flow so the existing frontend hooks `frontend/src/hooks/queries/useAdminPayoutRequests.ts` and admin page `frontend/src/pages/admin/AdminPayouts.tsx` can list all withdrawal requests and approve/decline them through admin-only methods.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "okay continue wiring the backend for statistics and payout then deploy the app and show me the site domain"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Calling `getAllPayoutRequests()` as an admin returns all stored payout requests across all users.",
+        "Calling `updatePayoutRequestStatus(requestId, newStatus)` as an admin updates the stored request status for valid `requestId` values, and errors cleanly when the request does not exist.",
+        "Calling `getAllPayoutRequests()` / `updatePayoutRequestStatus(...)` as a non-admin traps/returns an authorization error consistent with the current authorization pattern.",
+        "After approving/declining a payout request via `/admin/payouts`, the list refreshes and shows the updated status (via existing React Query invalidation).",
+        "Admin dashboard pending payouts count updates accordingly after a request status change (since the frontend invalidates `adminDashboardStats`)."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Ensure payout request state transitions are consistent with user balances and do not allow double-spending or inconsistent accounting when users create payout requests and admins approve/decline them.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "okay continue wiring the backend for statistics and payout then deploy the app and show me the site domain"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Creating a payout request cannot result in a user being able to request/withdraw more than their available balance (server-side enforced).",
+        "Approving/declining a payout request results in deterministic, auditable balance changes (or explicit documentation of the chosen accounting approach in code comments), and does not allow repeated approvals/declines to apply balance effects multiple times.",
+        "At least one basic regression scenario is manually verifiable: create payout request -> approve -> request is not pending; pending payouts decreases; user cannot create a second request that exceeds remaining balance."
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Deploy the updated application (frontend + backend canister) and provide the final live site URL/domain along with the relevant deployed canister IDs.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "okay continue wiring the backend for statistics and payout then deploy the app and show me the site domain"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app is deployed successfully and loads over HTTPS at the provided URL.",
+        "The response includes the live site domain/URL and the canister IDs needed to reference the deployment.",
+        "Visiting `/admin` on the deployed site works (routes load) and admin-only API calls are gated by admin authorization."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in `backend/main.mo`; only add/update `backend/migration.mo` if an upgrade requires state migration.",
+    "Do not modify files under `frontend/src/components/ui` or any other paths listed as immutable by SYSTEM_CONTEXT.",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Implementing external payout integrations (e.g., PayPal Payouts, Stripe) or any off-chain payment processing.",
+    "Adding new admin sections beyond statistics and payout review.",
+    "Introducing new backend services, databases, or non-Motoko backend code."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
