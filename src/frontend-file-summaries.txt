@@ -1,5 +1,5 @@
 {
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining all routes for user pages (landing, dashboard, tasks, payout, profile, notifications, support, about) and admin pages (dashboard, tasks, payouts, users, support), wrapped with ThemeProvider and authentication gates.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup defining all routes including a new public '/about' route (no auth required) for deployment verification alongside the existing authenticated '/app/about' route.",
   "frontend/src/components/AuthGate.tsx": "Authentication gate component that blocks unauthenticated users with a sign-in prompt, shows loading state during profile fetch, and redirects to onboarding if user profile doesn't exist.",
   "frontend/src/components/AppShell.tsx": "Main app layout shell component that wraps authenticated user pages with TopHeader and BottomNav, providing consistent navigation structure.",
   "frontend/src/components/TopHeader.tsx": "Fixed top header with text logo, notification bell (with unread count badge), and support icon, using glassmorphism styling.",
@@ -18,7 +18,7 @@
   "frontend/src/pages/Notifications.tsx": "Notifications page with placeholder for notification list (backend gap documented).",
   "frontend/src/pages/Support.tsx": "Support inbox page with placeholder for support ticket system (backend gap documented).",
   "frontend/src/pages/SupportThread.tsx": "Support thread detail page placeholder (backend gap documented).",
-  "frontend/src/pages/About.tsx": "About page displaying platform information, deployment details (live URL, network, canister IDs), supported features, limitations, and admin/payout configuration documentation.",
+  "frontend/src/pages/About.tsx": "About page displaying platform information and deployment details with prominent network label, canister IDs, and live site URL, plus configuration error warning when IC build lacks valid environment variables.",
   "frontend/src/pages/AccessDenied.tsx": "Access denied page shown to non-admin users attempting to access admin routes.",
   "frontend/src/pages/admin/AdminLayout.tsx": "Admin panel layout with sidebar navigation for dashboard, tasks, payouts, users, and support sections.",
   "frontend/src/pages/admin/AdminDashboard.tsx": "Admin dashboard page displaying real-time platform statistics (users, earnings, tasks, payouts) with loading skeletons and authorization error handling.",
@@ -32,10 +32,10 @@
   "frontend/src/index.css": "Global styles with OKLCH-based red/white color system for dark theme, custom animations, and Inter font family.",
   "frontend/tailwind.config.js": "Tailwind configuration with extended red gradient colors, glow shadow utilities, and custom animation keyframes.",
   "frontend/index.html": "HTML entry point with favicon, meta tags, and root div for React app.",
-  "frontend/README.md": "Comprehensive project documentation covering features, tech stack, local development setup, environment variables, admin configuration, deployment instructions to IC mainnet, and platform limitations.",
+  "frontend/README.md": "Comprehensive project documentation with detailed IC mainnet deployment instructions including required environment variables, step-by-step deployment process, post-deployment verification checklist, and troubleshooting guide for configuration errors.",
   "frontend/src/components/TextLogo.tsx": "Simple reusable text logo component rendering \"X\" in red and \"Task\" in white with bold typography.",
   "frontend/src/hooks/queries/useAdminDashboardStats.ts": "React Query hook for fetching admin dashboard statistics from the backend with proper actor dependency gating and error handling.",
   "frontend/src/hooks/queries/useAdminPayoutRequests.ts": "React Query hooks for fetching all payout requests and updating payout request status with automatic cache invalidation.",
-  "frontend/src/deployInfo.ts": "Deployment metadata module that reads canister IDs and site URL from Vite environment variables and exposes them as typed constants for UI display.",
+  "frontend/src/deployInfo.ts": "Deployment metadata module with hardened IC mainnet validation that comprehensively rejects placeholder/invalid canister IDs (MISSING, local-*, undefined, empty, non-alphanumeric) and exposes isConfigured flag for UI error handling.",
   "frontend/src/components/PrincipalReveal.tsx": "Reusable component that displays a toggle control to reveal/hide the user's Internet Identity Principal ID with copy-to-clipboard functionality and toast notifications."
 }

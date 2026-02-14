@@ -1,25 +1,4 @@
 {
   "kind": "feature_evidence_report",
-  "features": [
-    {
-      "featureId": "feature-add-a-simple-ui-control-labeled-show-my-principal-that-displays-the-currently-authenticated-internet-identity-principal-id-as-text-so-the-user-can-copy-share-it-for-admin-allowlisting",
-      "featureTitle": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
-      "files": [
-        "frontend/src/components/PrincipalReveal.tsx",
-        "frontend/src/pages/Profile.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-24"
-      ],
-      "confidence": "high"
-    }
-  ]
+  "features": []
 }

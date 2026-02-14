@@ -1,37 +1,32 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T21:00:01.630Z",
+  "generatedAt": "2026-02-14T21:49:38.763Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 1,
-    "implemented": 1,
+    "implemented": 0,
     "items": [
       {
-        "id": "REQ-24",
-        "summary": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/PrincipalReveal.tsx",
-          "frontend/src/pages/Profile.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/PrincipalReveal.tsx",
-          "frontend/src/pages/Profile.tsx"
-        ]
+        "id": "REQ-1",
+        "summary": "Update the backend admin allowlist so that Principal `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae` is recognized as an admin by the canister (i.e., `AccessControl.isAdmin(accessControlState, caller)` returns true for that Principal) and can access all existing admin-only methods.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
     "feature_evidence.json",
-    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/PrincipalReveal.tsx",
-    "frontend/src/pages/Profile.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

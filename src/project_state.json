@@ -1,281 +1,33 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 11,
-  "summary": "Xtask: redesign/build a fully supported, production-ready web-only paid tasks platform using Internet Computer stack (React frontend + Motoko backend), leveraging Internet Identity authentication and on-chain canister storage; excludes unsupported items like mobile apps, Next.js/Node backend, PostgreSQL/MongoDB, email/Google/Apple auth, real-time external services, and PayPal Payouts.",
+  "projectStateVersion": 3,
+  "summary": "Deployed web app on Internet Computer (caffeine.xyz) with an admin role/access control requirement; production dashboard route currently not loading.",
   "architectural_notes": [
-    "Platform constraints accepted: Internet Computer stack only (React web frontend + Motoko backend).",
-    "Auth will use Internet Identity; email/password + Google/Apple OAuth are out of scope.",
-    "Persistence will use canister storage (no PostgreSQL/MongoDB).",
-    "External payout integrations like PayPal Payouts API are out of scope; payout flow must be redesigned accordingly.",
-    "Admin panel is served under /admin and protected by Internet Identity with an AdminRoute/allowlisted admin principals; proceed to backend wiring for payout management and admin statistics.",
-    "Proceed with wiring Motoko backend for real admin statistics and admin payout management, then deploy the updated app and provide the deployed site domain for review."
+    "Deployment target appears to be an Internet Computer canister served via caffeine.xyz; frontend assets served from an asset canister.",
+    "App includes an admin role tied to Internet Computer principal IDs (principal-based authorization)."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "existing_features": [
-    {
-      "id": "feature-define-and-implement-an-internet-computer-compatible-scope-for-xtask-that-replaces-unsupported-items-email-password-auth-google-apple-login-jwt-external-dbs-paypal-payouts-true-real-time-with-supported-equivalents-internet-identity-authentication-motoko-canister-storage-in-app-notifications-and-ui-updates-via-polling-refresh",
-      "title": "Define and implement an Internet Computer–compatible scope for Xtask that replaces unsupported items (email/password auth, Google/Apple login, JWT, external DBs, PayPal payouts, true real-time) with supported equivalents: Internet Identity authentication, Motoko canister storage, in-app notifications, and UI updates via polling/refresh.",
-      "reqIds": [
-        "REQ-1"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-authentication-using-internet-identity-ii-and-create-a-first-time-onboarding-flow-that-creates-loads-a-user-profile-in-the-backend-keyed-by-the-caller-principal",
-      "title": "Implement authentication using Internet Identity (II) and create a first-time onboarding flow that creates/loads a user profile in the backend keyed by the caller Principal.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-the-referral-system-in-motoko-1-optional-referral-code-input-on-first-time-signup-onboarding-2-unique-referral-code-auto-generated-for-every-user-3-referral-reward-of-5-credited-to-the-referrer-only-after-the-referred-user-completes-at-least-1-task",
-      "title": "Implement the referral system in Motoko: (1) optional referral code input on first-time signup/onboarding, (2) unique referral code auto-generated for every user, (3) referral reward of $5 credited to the referrer only after the referred user completes at least 1 task.",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-build-the-core-user-navigation-and-pages-mobile-first-responsive-with-the-required-sections-bottom-nav-bar-with-dashboard-tasks-payout-profile-and-a-top-header-area-with-notification-bell-and-support-entry-point-no-external-real-time",
-      "title": "Build the core user navigation and pages (mobile-first responsive) with the required sections: bottom nav bar with Dashboard, Tasks, Payout, Profile; and a top header area with notification bell and support entry point (no external real-time).",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-tasks-user-flow-tasks-list-task-details-and-task-completion-submission-flow-support-task-statuses-available-completed-pending-review-and-an-optional-proof-submission-field-text-optional-url-stored-in-the-backend",
-      "title": "Implement Tasks user flow: tasks list, task details, and task completion/submission flow. Support task statuses (available / completed / pending review) and an optional proof submission field (text + optional URL) stored in the backend.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-the-payout-module-without-external-payout-apis-users-can-1-add-manage-payout-methods-crypto-usdt-btc-eth-sol-paypal-identifier-bank-transfer-details-as-text-fields-2-create-withdrawal-requests-subject-to-minimum-payout-10-and-a-configurable-withdrawal-fee-and-3-view-transaction-history-with-statuses-pending-approved-declined",
-      "title": "Implement the Payout module without external payout APIs: users can (1) add/manage payout methods (Crypto: USDT/BTC/ETH/SOL, PayPal identifier, Bank Transfer details as text fields), (2) create withdrawal requests subject to minimum payout $10 and a configurable withdrawal fee, and (3) view transaction history with statuses (pending/approved/declined).",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-in-app-notifications-in-the-backend-and-ui-for-new-tasks-approved-payouts-declined-payouts-referral-rewards-and-system-updates-notifications-must-be-retrievable-per-user-and-displayed-via-the-notification-bell-updates-may-be-reflected-via-periodic-refresh-not-websockets",
-      "title": "Implement in-app notifications in the backend and UI for: new tasks, approved payouts, declined payouts, referral rewards, and system updates. Notifications must be retrievable per user and displayed via the notification bell; updates may be reflected via periodic refresh (not websockets).",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-a-support-system-as-an-in-app-ticketed-messaging-thread-users-can-create-inquiries-and-add-messages-admins-can-reply-users-can-view-status-and-history-updates-are-refreshed-via-polling",
-      "title": "Implement a Support system as an in-app ticketed messaging thread: users can create inquiries and add messages; admins can reply; users can view status and history. Updates are refreshed via polling.",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-an-admin-panel-compatible-with-internet-identity-admin-access-is-granted-by-an-allowlist-of-admin-principals-configured-in-the-canister-replacing-the-requested-email-password-admin-login-provide-admin-ui-routes-guarded-by-admin-checks",
-      "title": "Implement an Admin panel compatible with Internet Identity: admin access is granted by an allowlist of admin Principals configured in the canister (replacing the requested email/password admin login). Provide admin UI routes guarded by admin checks.",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-admin-features-implement-admin-dashboard-statistics-task-management-create-edit-delete-set-reward-requirements-status-payout-request-review-approve-decline-update-status-user-management-view-users-freeze-ban-delete-view-referral-data-and-support-message-management-view-reply",
-      "title": "Admin features: implement admin dashboard statistics, task management (create/edit/delete/set reward/requirements/status), payout request review (approve/decline/update status), user management (view users, freeze/ban/delete, view referral data), and support message management (view/reply).",
-      "reqIds": [
-        "REQ-11"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-frontend-ui-ux-implement-the-specified-red-white-premium-glassmorphism-design-system-across-the-entire-app-including-modern-typography-gradient-reds-soft-shadows-hover-glow-effects-micro-interactions-smooth-page-transitions-skeleton-loaders-and-an-animated-landing-hero-section-plus-splash-style-animated-intro-logo-treatment-web",
-      "title": "Frontend UI/UX: implement the specified red/white premium glassmorphism design system across the entire app, including modern typography, gradient reds, soft shadows, hover glow effects, micro-interactions, smooth page transitions, skeleton loaders, and an animated landing hero section plus splash-style animated intro logo treatment (web).",
-      "reqIds": [
-        "REQ-12"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-provide-deployment-run-documentation-for-the-internet-computer-project-local-development-steps-canister-deployment-steps-how-to-configure-admin-principals-and-where-configurable-constants-live-e-g-withdrawal-fee",
-      "title": "Provide deployment/run documentation for the Internet Computer project: local development steps, canister deployment steps, how to configure admin principals, and where configurable constants live (e.g., withdrawal fee).",
-      "reqIds": [
-        "REQ-14"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-replace-the-current-image-based-logo-with-a-simple-text-logo-that-renders-x-in-red-and-task-in-white-no-complex-styling-and-use-it-consistently-anywhere-the-logo-is-shown-at-minimum-the-authenticated-topheader-and-the-public-landing-page-header",
-      "title": "Replace the current image-based logo with a simple text logo that renders “X” in red and “Task” in white (no complex styling), and use it consistently anywhere the logo is shown (at minimum: the authenticated TopHeader and the public Landing page header).",
-      "reqIds": [
-        "REQ-15"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-frontend-admin-dashboard-page-to-fetch-and-render-the-real-admin-statistics-from-the-backend-instead-of-using-placeholder-constants",
-      "title": "Update the frontend /admin/dashboard page to fetch and render the real admin statistics from the backend instead of using placeholder constants.",
-      "reqIds": [
-        "REQ-18"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-frontend-admin-payouts-page-to-fetch-and-display-real-payout-withdrawal-requests-from-the-backend-and-allow-admins-to-approve-or-decline-requests",
-      "title": "Update the frontend /admin/payouts page to fetch and display real payout/withdrawal requests from the backend and allow admins to approve or decline requests.",
-      "reqIds": [
-        "REQ-19"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-deploy-the-updated-application-frontend-backend-canister-and-provide-the-final-live-site-url-domain-along-with-the-relevant-deployed-canister-ids",
-      "title": "Deploy the updated application (frontend + backend canister) and provide the final live site URL/domain along with the relevant deployed canister IDs.",
-      "reqIds": [
-        "REQ-23"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-simple-ui-control-labeled-show-my-principal-that-displays-the-currently-authenticated-internet-identity-principal-id-as-text-so-the-user-can-copy-share-it-for-admin-allowlisting",
-      "title": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
-      "reqIds": [
-        "REQ-24"
-      ],
-      "version": 1
-    }
+  "known_issues": [
+    "Production URL https://xtask-3p7.caffeine.xyz/app/dashboard never loads (possible missing/broken frontend asset deployment or routing to empty asset canister)."
   ],
+  "isFixRequest": true,
+  "existing_features": [],
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Define supported Xtask scope on Internet Computer (web-only React + Motoko), including feature tradeoffs vs original spec",
+      "summary": "Add/update admin access control to make principal vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae an admin",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Implement authentication using Internet Identity (II) and user profile creation/storage in Motoko",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Core user app: Dashboard, Tasks list/details, task completion/submission flow, and Profile pages (React)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Motoko backend canisters: data models and CRUD for users, tasks, task submissions, earnings/balance tracking",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Admin capabilities adapted to IC: admin role, admin dashboard, task management, user management, and review/approval flows",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Payout system redesign for supported stack (no PayPal): define and implement withdrawal request + transaction status tracking without external payout API",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-7",
-      "summary": "UI/UX: red/white premium glassmorphism theme, responsive design, animations/micro-interactions within React web constraints",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-8",
-      "summary": "Deployment readiness for IC: environment/config guidance, canister setup, build instructions, and production hardening basics",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-14",
-      "summary": "Implement earnings and balance tracking in the backend: track task earnings, referral earnings, and an available balance that can be used for withdrawal requests. Ensure balance changes are consistent and validated server-side.",
+      "summary": "Update the backend admin allowlist so that Principal `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae` is recognized as an admin by the canister (i.e., `AccessControl.isAdmin(accessControlState, caller)` returns true for that Principal) and can access all existing admin-only methods.",
       "reqIds": [
-        "REQ-6"
+        "REQ-1"
       ],
       "status": "pending"
-    },
-    {
-      "id": "AR-21",
-      "summary": "Backend hardening and validation: enforce server-side validation/authorization for all state-changing methods; implement consistent error handling; prevent unauthorized writes and ensure stable storage persistence across upgrades for core data (users, tasks, submissions, payouts, notifications, support threads).",
-      "reqIds": [
-        "REQ-13"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-22",
-      "summary": "Revise branding assets: simplify “X Task” logo to plain text with red “X” and white “Task” (no complex styling)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-23",
-      "summary": "Add missing Motoko backend methods and wiring so /admin payout management and admin dashboard statistics display real data (payouts + stats backend integration)",
-      "reqIds": [],
-      "status": "in_progress"
-    },
-    {
-      "id": "AR-24",
-      "summary": "Add Motoko backend query method(s) that provide real admin dashboard statistics used by the /admin/dashboard page (at minimum: total users, total earnings, active tasks, and pending payouts) and restrict access to admins only.",
-      "reqIds": [
-        "REQ-16"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-25",
-      "summary": "Implement Motoko backend admin payout management methods so the /admin/payouts UI can display and review withdrawal requests. This must include an admin-only method to list payout/withdrawal requests across all users and an admin-only method to update a request status (approve/decline).",
-      "reqIds": [
-        "REQ-17"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-26",
-      "summary": "Complete and validate the Motoko backend implementation for admin dashboard statistics so the existing frontend hook `frontend/src/hooks/queries/useAdminDashboardStats.ts` and page `frontend/src/pages/admin/AdminDashboard.tsx` reliably return real, non-placeholder values for: total users, total earnings, active tasks, and pending payouts, and the method remains admin-only.",
-      "reqIds": [
-        "REQ-20"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-27",
-      "summary": "Finish and harden the Motoko backend payout admin flow so the existing frontend hooks `frontend/src/hooks/queries/useAdminPayoutRequests.ts` and admin page `frontend/src/pages/admin/AdminPayouts.tsx` can list all withdrawal requests and approve/decline them through admin-only methods.",
-      "reqIds": [
-        "REQ-21"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-28",
-      "summary": "Ensure payout request state transitions are consistent with user balances and do not allow double-spending or inconsistent accounting when users create payout requests and admins approve/decline them.",
-      "reqIds": [
-        "REQ-22"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-29",
-      "summary": "Add a simple UI control (e.g., button/page) that displays the currently authenticated Internet Identity Principal ID to help users/admins share it for admin allowlisting.",
-      "reqIds": [],
-      "status": "in_progress"
     }
   ],
-  "gameProjectType": "none",
-  "projectName": "Xtask",
+  "projectName": "Allowlist a specific Principal as admin",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

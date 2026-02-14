@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Let authenticated users view and copy their current Internet Identity Principal ID from the profile page.
+**Goal:** Make the specified Principal ID recognized as an admin by the backend canister so it can use all existing admin-only methods.
 
 **Planned changes:**
-- Add a clearly visible “Show my Principal” control on the authenticated `/app/profile` page.
-- When activated, display the caller Principal ID as text using the existing identity API (e.g., `identity.getPrincipal().toText()`).
-- If no identity is available, show an English message indicating the user must sign in to view the Principal.
-- Add a “Copy” button to copy the displayed Principal to the clipboard, with minimal confirmation (toast or inline text).
+- Add Principal `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae` to the backend admin allowlist used by `AccessControl.isAdmin(...)`.
+- Ensure the allowlist update persists across redeploy/upgrade (preserving existing admins and including this new admin in stable state/migration as needed).
+- Keep non-admin behavior unchanged (admin-only methods continue to reject unauthorized callers).
 
-**User-visible outcome:** On the profile page, users can reveal their Internet Identity Principal ID and copy it for sharing/allowlisting; signed-out users are prompted to sign in to view it.
+**User-visible outcome:** When authenticated as `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae`, existing admin-only backend methods succeed; other principals still receive the existing unauthorized error.

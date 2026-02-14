@@ -1,29 +1,6 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add “Show my Principal” control on Profile page",
-  "requirements": [
-    {
-      "id": "REQ-24",
-      "summary": "Expose a “Show my Principal” control on the authenticated Profile page with reveal + clipboard copy behavior.",
-      "acceptanceCriteria": [
-        "On the authenticated /app/profile page, there is a clearly visible control labeled “Show my Principal”.",
-        "When clicked (or toggled), the UI reveals the caller Principal ID derived from the current Internet Identity (e.g., identity.getPrincipal().toText()).",
-        "If the user is not authenticated (no identity available), the UI shows an English message indicating the user must sign in to view the Principal.",
-        "The displayed Principal ID can be copied to clipboard via a “Copy” button (with a minimal confirmation such as toast or inline text)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/PrincipalReveal.tsx",
-          "operation": "create",
-          "description": "Create a small, reusable UI component that consumes the existing useInternetIdentity hook to (1) render a control labeled “Show my Principal”, (2) toggle-reveal identity.getPrincipal().toText(), (3) show a sign-in-required message when identity is unavailable, and (4) provide a “Copy” action using navigator.clipboard with a minimal confirmation (toast via existing sonner usage pattern or inline confirmation)."
-        },
-        {
-          "path": "frontend/src/pages/Profile.tsx",
-          "operation": "modify",
-          "description": "Integrate the new PrincipalReveal component into the existing authenticated Profile page layout (e.g., within an existing GlassCard or as a new section) so it is clearly visible on /app/profile, without modifying any immutable auth hooks or any files under frontend/src/components/ui."
-        }
-      ]
-    }
-  ]
+  "title": "Frontend-only: No changes required for backend admin allowlist update",
+  "requirements": []
 }

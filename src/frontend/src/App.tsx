@@ -37,6 +37,13 @@ const landingRoute = createRoute({
   component: Landing,
 });
 
+// Public About route for deployment verification (no auth required)
+const publicAboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: About,
+});
+
 const appRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/app',
@@ -97,7 +104,8 @@ const supportThreadRoute = createRoute({
   component: SupportThread,
 });
 
-const aboutRoute = createRoute({
+// Authenticated About route (kept for backward compatibility)
+const authenticatedAboutRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/about',
   component: About,
@@ -155,6 +163,7 @@ const accessDeniedRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   landingRoute,
+  publicAboutRoute,
   appRoute.addChildren([
     dashboardRoute,
     tasksRoute,
@@ -164,7 +173,7 @@ const routeTree = rootRoute.addChildren([
     notificationsRoute,
     supportRoute,
     supportThreadRoute,
-    aboutRoute,
+    authenticatedAboutRoute,
   ]),
   adminRoute.addChildren([
     adminDashboardRoute,

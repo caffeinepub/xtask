@@ -1,36 +1,34 @@
 {
   "kind": "build_request",
-  "title": "Add a simple “Show my Principal” control",
+  "title": "Allowlist a specific Principal as admin",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-24",
-      "text": "Add a simple UI control labeled “Show my Principal” that displays the currently authenticated Internet Identity Principal ID (as text) so the user can copy/share it for admin allowlisting.",
-      "target": "frontend",
+      "id": "REQ-1",
+      "text": "Update the backend admin allowlist so that Principal `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae` is recognized as an admin by the canister (i.e., `AccessControl.isAdmin(accessControlState, caller)` returns true for that Principal) and can access all existing admin-only methods.",
+      "target": "backend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "add a simple “Show my Principal”"
+          "I want to make this principal id : vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae the admin"
         ]
       },
       "acceptanceCriteria": [
-        "On the authenticated /app/profile page, there is a clearly visible control labeled “Show my Principal”.",
-        "When clicked (or toggled), the UI reveals the caller Principal ID derived from the current Internet Identity (e.g., identity.getPrincipal().toText()).",
-        "If the user is not authenticated (no identity available), the UI shows an English message indicating the user must sign in to view the Principal.",
-        "The displayed Principal ID can be copied to clipboard via a “Copy” button (with a minimal confirmation such as toast or inline text)."
+        "When authenticated as `vtyfq-kcl6h-mvrxs-ixdx3-ew454-lywvd-3om5o-z3adc-gankr-lwzz2-jae`, admin-only backend methods (e.g., `getAdminDashboardStats`, `getAllPayoutRequests`, `updatePayoutRequestStatus`, `createTask`) succeed without trapping with \"Unauthorized: Only admins can perform this action\".",
+        "When authenticated as a non-admin principal, admin-only backend methods continue to trap with the existing unauthorized error.",
+        "The admin allowlist change persists after redeploy/upgrade (if the admin list is stored in stable state, include the necessary upgrade/migration logic to keep existing admins and add this new one)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (shadcn components are read-only).",
-    "Do not modify immutable auth hook files (frontend/src/hooks/useInternetIdentity.ts / .tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx). Instead, consume their existing APIs from new or existing components/pages.",
-    "Keep the change minimal and localized (prefer adding to an existing authenticated page such as frontend/src/pages/Profile.tsx)."
+    "Backend must remain a single Motoko actor in backend/main.mo (no additional backend services).",
+    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything in frontend/src/components/ui."
   ],
   "nonGoals": [
-    "Do not change the admin allowlist logic or admin permissions behavior.",
-    "Do not add new authentication methods (email/Google/etc.)."
+    "Fixing the production URL loading issue (blank/never loads) is out of scope for this request unless it is directly required to verify the admin allowlist change.",
+    "Adding new admin UI features or changing admin page layouts is out of scope."
   ],
   "imageRequirements": {
     "required": [],

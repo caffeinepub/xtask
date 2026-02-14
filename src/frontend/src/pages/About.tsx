@@ -1,14 +1,48 @@
 import GlassCard from '../components/GlassCard';
-import { Info, CheckCircle, XCircle, Globe, Server } from 'lucide-react';
+import { Info, CheckCircle, XCircle, Globe, AlertTriangle } from 'lucide-react';
 import { deploymentInfo } from '../deployInfo';
 
 export default function About() {
+  const showConfigError = !deploymentInfo.isConfigured && deploymentInfo.network === 'ic';
+
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-white">About Xtask</h1>
-        <p className="text-gray-300">Platform information and scope</p>
+        <p className="text-gray-300">Platform information and deployment details</p>
       </div>
+
+      {showConfigError && (
+        <GlassCard className="border-red-500/50 bg-red-950/20">
+          <div className="flex items-start space-x-3">
+            <AlertTriangle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
+            <div className="space-y-2">
+              <h2 className="text-xl font-bold text-red-400">Configuration Error</h2>
+              <p className="text-gray-300">
+                This application was built for IC mainnet deployment but is missing required build-time environment
+                variables. The deployment will not function correctly.
+              </p>
+              <div className="mt-4 space-y-2 text-sm">
+                <p className="text-gray-400 font-semibold">Required environment variables at build time:</p>
+                <ul className="list-disc list-inside space-y-1 text-gray-300 ml-2">
+                  <li>
+                    <code className="text-red-400">VITE_DFX_NETWORK=ic</code>
+                  </li>
+                  <li>
+                    <code className="text-red-400">VITE_BACKEND_CANISTER_ID=&lt;backend-canister-id&gt;</code>
+                  </li>
+                  <li>
+                    <code className="text-red-400">VITE_FRONTEND_CANISTER_ID=&lt;frontend-canister-id&gt;</code>
+                  </li>
+                </ul>
+                <p className="text-gray-400 mt-3">
+                  See the project README for deployment instructions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
+      )}
 
       <GlassCard className="space-y-6">
         <div className="flex items-start space-x-3">
@@ -29,29 +63,45 @@ export default function About() {
           </h3>
           <div className="space-y-3 ml-7">
             <div className="space-y-1">
-              <p className="text-sm text-gray-400">Live Site URL</p>
-              <a
-                href={deploymentInfo.siteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-red-400 hover:text-red-300 transition-colors break-all"
-              >
-                {deploymentInfo.siteUrl}
-              </a>
-            </div>
-            <div className="space-y-1">
               <p className="text-sm text-gray-400">Network</p>
-              <p className="text-gray-300 font-mono text-sm">
+              <p className="text-gray-300 font-mono text-sm font-semibold">
                 {deploymentInfo.network === 'ic' ? 'Internet Computer (Mainnet)' : deploymentInfo.network}
               </p>
             </div>
             <div className="space-y-1">
+              <p className="text-sm text-gray-400">Live Site URL</p>
+              {showConfigError ? (
+                <p className="text-red-400 font-mono text-sm">Configuration Error - See warning above</p>
+              ) : (
+                <a
+                  href={deploymentInfo.siteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-red-400 hover:text-red-300 transition-colors break-all font-mono text-sm"
+                >
+                  {deploymentInfo.siteUrl}
+                </a>
+              )}
+            </div>
+            <div className="space-y-1">
               <p className="text-sm text-gray-400">Backend Canister ID</p>
-              <p className="text-gray-300 font-mono text-sm break-all">{deploymentInfo.backendCanisterId}</p>
+              <p
+                className={`font-mono text-sm break-all ${
+                  showConfigError ? 'text-red-400' : 'text-gray-300'
+                }`}
+              >
+                {deploymentInfo.backendCanisterId}
+              </p>
             </div>
             <div className="space-y-1">
               <p className="text-sm text-gray-400">Frontend Canister ID</p>
-              <p className="text-gray-300 font-mono text-sm break-all">{deploymentInfo.frontendCanisterId}</p>
+              <p
+                className={`font-mono text-sm break-all ${
+                  showConfigError ? 'text-red-400' : 'text-gray-300'
+                }`}
+              >
+                {deploymentInfo.frontendCanisterId}
+              </p>
             </div>
           </div>
         </div>

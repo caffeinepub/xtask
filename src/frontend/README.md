@@ -32,3 +32,4 @@ A production-ready web application for completing tasks and earning money, built
 ### Local Development
 
 1. Install dependencies:
+
